@@ -1,7 +1,9 @@
 import axios from 'axios';
 import store from '../store';
-import { Message, MessageBox } from 'element';
-import config from '@/config/index';
+import router from '../router/index';
+import { MessageBox, Toast } from 'mint-ui';
+
+import config from '../config/index';
 
 function stringifyParams(params) {
   let keys = Object.keys(params);
@@ -9,7 +11,7 @@ function stringifyParams(params) {
     let paramArr = keys.filter((key) => {
       return params[key] != null;
     }).map((key) => {
-      return key + '=' + params[key]
+      return key + '=' + params[key];
     });
     return paramArr.join('&');
   }
@@ -18,20 +20,16 @@ function stringifyParams(params) {
 
 const showExpireBox = (() => {
   let show = 0;
-  return function () {
+  return function() {
     if (show) return;
     show = 1;
-    MessageBox.alert('登录过期,请重新登录', "提示", {
-      confirmButtonText: '确定',
-      type: 'warning',
-      callback: action => {
-        show = 0;
-        store.clearUserInfoAction();
-        store.clearDictAction();
-        location.href = "/login.html?redirect=" + encodeURIComponent(location.href);
-      }
+    MessageBox.alert('登录过期,请重新登录!').then(action => {
+      show = 0;
+      store.clearUserInfoAction();
+      store.clearDictAction();
+      router.push({ name: 'login' });
     });
-  }
+  };
 })();
 
 const http = axios.create({
@@ -40,11 +38,11 @@ const http = axios.create({
   timeout: 60000
 });
 const showError = msg => {
-  Message({
+  Toast({
     type: 'error',
     message: msg || '操作失败，请稍后再试'
-  })
-}
+  });
+};
 
 http.interceptors.request.use((config) => {
   if (config.queryJson === false) {
@@ -60,15 +58,14 @@ http.interceptors.request.use((config) => {
 
 http.interceptors.response.use(res => {
     let ret = res.data;
-    let showErrorMsg = res.config.showError === false ? false : true;
-    if (ret.code == -2) {
-      return showExpireBox();
+    if (ret.code === -2) {
+      showExpireBox();
+      return Promise.reject(ret.msg);
     }
-    if (ret.code == 0) {
+    else if (ret.success) {
       return ret.data;
     } else {
-      showErrorMsg && showError(ret.msg);
-      return Promise.reject(ret.msg);
+      return showError(ret.msg);
     }
   },
   error => {
