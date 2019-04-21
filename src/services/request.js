@@ -52,7 +52,7 @@ http.interceptors.request.use((config) => {
   }
   return config;
 }, error => {
-  showError();
+  showError(error.msg);
   Promise.reject();
 });
 
@@ -69,7 +69,7 @@ http.interceptors.response.use(res => {
     }
   },
   error => {
-    showError();
+    showError(error.response.data.msg);
     return Promise.reject();
   }
 );

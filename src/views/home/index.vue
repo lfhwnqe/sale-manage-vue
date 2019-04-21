@@ -1,5 +1,13 @@
 <template>
-  <h1>主页</h1>
+  <div class="home-page">
+    <div class="home-page_statics">
+      留空，展示数据统计
+    </div>
+    <div class="home-page_btns">
+      <mt-button @click.native="$router.push({name:'orderList'})"  type="default">订单列表</mt-button>
+      <mt-button @click.native="$router.push({name:'addOrder'})"  type="default">添加订单</mt-button>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -19,10 +27,19 @@
       }
     },
     created(){
-      this.getOrderList()
+//      this.getOrderList()
     }
   };
 </script>
 
-<style>
+<style lang="scss" scoped>
+  .home-page{
+    display: flex;
+    justify-content:center;
+    flex-direction:column;
+    align-items:center;
+    &_statics{
+      height:30rem;
+    }
+  }
 </style>
