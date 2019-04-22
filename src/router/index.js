@@ -17,14 +17,14 @@ const router = new Router({
       title: '主页',
     },
     {
-      path:'orderList',
+      path:'/orderList',
       name:'orderList',
       title:'订单列表',
       component: () =>
         import( /* webpackChunkName: "index" */ '../views/order_list/index.vue'),
     },
     {
-      path:'addOrder',
+      path:'/addOrder',
       name:'addOrder',
       title:'添加订单',
       component: () =>

@@ -2,10 +2,18 @@
 @import "mixin";
 @import "reset";
 
-html,body,.ui-container{
+html, body, .ui-container {
   //height:100%;
 }
 
-.ui-container{
+.ui-container {
   width: 100vw;
+}
+
+.ui-ta-center {
+  text-align: center;
+}
+
+.ui-mr-auto {
+  margin: auto;
 }

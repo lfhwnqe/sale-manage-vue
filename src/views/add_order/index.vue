@@ -16,7 +16,7 @@
 
 <script>
   import * as api from '../../api/order';
-
+  import { Toast } from 'mint-ui';
   export default {
     data() {
       return {
@@ -34,7 +34,10 @@
       addOrder(){
         console.log('orderForm:',this.form)
         api.insertOrder(this.form).then(res=>{
-          console.log('alskdjsl:',res)
+          Toast({
+            type: 'success',
+            message: '添加成功'
+          });
         })
       }
     },
