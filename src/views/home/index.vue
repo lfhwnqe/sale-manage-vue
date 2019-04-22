@@ -11,7 +11,7 @@
 </template>
 
 <script>
-  import * as api from '../../api/index';
+  import * as api from '../../api/home';
 
   export default {
     data() {
@@ -20,14 +20,14 @@
       };
     },
     methods: {
-      getOrderList() {
-        return api.getOrderList().then(res => {
+      geTotalRevenueStatics() {
+        return api.geTotalRevenueStatics().then(res => {
           console.log('res:', res);
         });
       }
     },
     created(){
-//      this.getOrderList()
+      this.geTotalRevenueStatics()
     }
   };
 </script>

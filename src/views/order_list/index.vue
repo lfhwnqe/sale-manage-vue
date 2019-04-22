@@ -15,7 +15,7 @@
 </template>
 
 <script>
-  import * as api from '../../api/index';
+  import * as api from '../../api/order';
   import './index.scss';
 
   export default {
