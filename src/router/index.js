@@ -1,5 +1,6 @@
 import Router from 'vue-router';
 import NotFound from '../views/not-found';
+import { changePageTitle } from '../util/index';
 
 const router = new Router({
   routes: [
@@ -15,18 +16,21 @@ const router = new Router({
         import( /* webpackChunkName: "index" */ '../views/home/index.vue'),
       name: 'index',
       title: '主页',
+      meta: { name: '主页' }
     },
     {
-      path:'/orderList',
-      name:'orderList',
-      title:'订单列表',
+      path: '/orderList',
+      name: 'orderList',
+      title: '订单列表',
+      meta: { name: '订单列表' },
       component: () =>
         import( /* webpackChunkName: "index" */ '../views/order_list/index.vue'),
     },
     {
-      path:'/addOrder',
-      name:'addOrder',
-      title:'添加订单',
+      path: '/addOrder',
+      name: 'addOrder',
+      title: '添加订单',
+      meta: { name: '添加订单' },
       component: () =>
         import( /* webpackChunkName: "index" */ '../views/add_order/index.vue'),
     },
@@ -35,6 +39,7 @@ const router = new Router({
       component: () =>
         import( /* webpackChunkName: "login" */ '../views/login/index.vue'),
       name: 'login',
+      meta: { name: '登陆' },
       title: '登陆',
     },
     {
@@ -44,6 +49,11 @@ const router = new Router({
       }
     }
   ]
+});
+
+router.beforeEach((to, from, next) => {
+  changePageTitle(to.meta.name || '销售统计系统');
+  next();
 });
 
 export default router;

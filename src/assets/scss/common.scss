@@ -2,12 +2,11 @@
 @import "mixin";
 @import "reset";
 
+@include setSpace(1 2 4 10);
+@include setFontSize(1 2 3);
+
 html, body, .ui-container {
   //height:100%;
-}
-
-.ui-container {
-  width: 100vw;
 }
 
 .ui-ta-center {
@@ -17,3 +16,5 @@ html, body, .ui-container {
 .ui-mr-auto {
   margin: auto;
 }
+
+

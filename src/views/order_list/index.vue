@@ -1,11 +1,14 @@
 <template>
-  <div class="order-list ui-container">
-    <div class="order-list_title">订单列表</div>
+  <div class="order-list ui-container ui-pa-2">
     <div v-infinite-scroll="getOrderList" infinite-scroll-distance="0"
       :infinite-scroll-disabled="loading" class="order-list_list ">
-
-      <mt-cell class="order-list_list_item" v-for="item in orderList" :title="item.productName"
-        :value="item.totalPrice"></mt-cell>
+      <div class="order-list-item" v-for="(item,index) in orderList">
+        <mt-cell v-if="index===dateIndex[new Date(item.saleTime).toLocaleDateString()]"
+          :title="new Date(item.saleTime).toLocaleDateString()"
+        ></mt-cell>
+        <mt-cell :title="item.productName"
+          :value="item.totalPrice"></mt-cell>
+      </div>
       <div v-show="loading" class="order-list_loading ui-ta-center">
         <mt-spinner type="fading-circle"></mt-spinner>
       </div>
@@ -48,5 +51,18 @@
         });
       },
     },
+    computed: {
+      dateIndex() {
+        const ret = {};
+        const orderList = this.orderList;
+        orderList.forEach((item, index) => {
+          const date = new Date(item.saleTime).toLocaleDateString();
+          if (!ret[date] && ret[date] !== 0) {
+            ret[date] = index;
+          }
+        });
+        return ret;
+      }
+    }
   };
 </script>

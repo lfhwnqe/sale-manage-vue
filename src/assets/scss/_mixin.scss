@@ -1,0 +1,50 @@
+@mixin setSpace($spaces) {
+  @if length($spaces) > 0 {
+    @each $space in $spaces {
+      .ui-ma-#{$space} {
+        margin: $space + 0rem;
+      }
+      .ui-mt-#{$space} {
+        margin-top: $space + 0rem;
+      }
+      .ui-mr-#{$space} {
+        margin-right: $space + 0rem;
+      }
+      .ui-mb-#{$space} {
+        margin-bottom: $space + 0rem;
+      }
+      .ui-ml-#{$space} {
+        margin-left: $space + 0rem;
+      }
+      .ui-pa-#{$space} {
+        padding: $space + 0rem;
+      }
+      .ui-pt-#{$space} {
+        padding-top: $space + 0rem;
+      }
+      .ui-pr-#{$space} {
+        padding-right: $space + 0rem;
+      }
+      .ui-pb-#{$space} {
+        padding-bottom: $space + 0rem;
+      }
+      .ui-pl-#{$space} {
+        padding-left: $space + 0rem;
+      }
+    }
+  } @else {
+    @warn "common space is empty!";
+  }
+}
+
+@mixin setFontSize($sizes) {
+  @if length($sizes)>0 {
+    @each $size in $sizes {
+      .ui-fz-#{$size} {
+        font-size: $size + 0rem;
+      }
+    }
+  } @else {
+    @warn "common space is empty!";
+  }
+}

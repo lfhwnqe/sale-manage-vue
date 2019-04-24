@@ -65,7 +65,8 @@ http.interceptors.response.use(res => {
     else if (ret.success) {
       return ret.data;
     } else {
-      return showError(ret.msg);
+      showError(ret.msg);
+      return Promise.reject();
     }
   },
   error => {
