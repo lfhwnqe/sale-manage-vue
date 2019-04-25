@@ -70,7 +70,7 @@ http.interceptors.response.use(res => {
     }
   },
   error => {
-    showError(error.response.data.msg);
+    showError(error.response.data.msg || '网络错误');
     return Promise.reject();
   }
 );
