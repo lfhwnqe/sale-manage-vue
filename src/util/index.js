@@ -19,3 +19,4 @@ export function changePageTitle(title) {
 export function isIOS() {
   return /(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent);
 }
+

@@ -2,12 +2,12 @@
   <div class="order-list ui-container ui-pa-2">
     <div v-infinite-scroll="getOrderList" infinite-scroll-distance="0"
       :infinite-scroll-disabled="loading" class="order-list_list ">
-      <div class="order-list-item" v-for="(item,index) in orderList">
+      <div @click="goDetail(index)" class="order-list-item" v-for="(item,index) in orderList">
         <mt-cell v-if="index===dateIndex[new Date(item.saleTime).toLocaleDateString()]"
           :title="new Date(item.saleTime).toLocaleDateString()"
         ></mt-cell>
-        <mt-cell :title="item.productName"
-          :value="item.totalPrice"></mt-cell>
+        <mt-cell :title="'产品：'+item.productName"
+          :value="item.totalPrice+'元'"></mt-cell>
       </div>
       <div v-show="loading" class="order-list_loading ui-ta-center">
         <mt-spinner type="fading-circle"></mt-spinner>
@@ -50,6 +50,13 @@
           this.loading = false;
         });
       },
+      goDetail(index) {
+        const params = this.orderList[index];
+        this.$router.push({
+          name: 'orderDetail',
+          params
+        });
+      }
     },
     computed: {
       dateIndex() {

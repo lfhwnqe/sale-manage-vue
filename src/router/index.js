@@ -24,7 +24,15 @@ const router = new Router({
       title: '订单列表',
       meta: { name: '订单列表' },
       component: () =>
-        import( /* webpackChunkName: "index" */ '../views/order_list/index.vue'),
+        import( /* webpackChunkName: "order" */ '../views/order_list/index.vue'),
+    },
+    {
+      path: '/orderDetail',
+      name: 'orderDetail',
+      title: '订单详情',
+      meta: { name: '订单详情' },
+      component: () =>
+        import( /* webpackChunkName: "order" */ '../views/order_list/detail/index.vue'),
     },
     {
       path: '/addOrder',
@@ -32,7 +40,7 @@ const router = new Router({
       title: '添加订单',
       meta: { name: '添加订单' },
       component: () =>
-        import( /* webpackChunkName: "index" */ '../views/add_order/index.vue'),
+        import( /* webpackChunkName: "order" */ '../views/add_order/index.vue'),
     },
     {
       path: '/login',
