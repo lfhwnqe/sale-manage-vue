@@ -5,6 +5,10 @@
 @include setSpace(1 2 4 10);
 @include setFontSize(1 2 3);
 
+* {
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+}
+
 html, body, .ui-container {
   //height:100%;
 }
@@ -15,6 +19,14 @@ html, body, .ui-container {
 
 .ui-mr-auto {
   margin: auto;
+}
+
+.ui-bb-pl {
+  border-bottom: 1px solid $c-placeholder;
+}
+
+.mu-item-content {
+  padding: 1rem 0;
 }
 
 

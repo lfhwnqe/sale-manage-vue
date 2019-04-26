@@ -1,7 +1,8 @@
 import axios from 'axios';
 import store from '../store';
 import router from '../router/index';
-import { MessageBox, Toast } from 'mint-ui';
+import Toast from 'muse-ui-toast';
+import Message from 'muse-ui-message';
 
 import config from '../config/index';
 
@@ -23,7 +24,7 @@ const showExpireBox = (() => {
   return function() {
     if (show) return;
     show = 1;
-    MessageBox.alert('登录过期,请重新登录!').then(action => {
+    Message.alert('登录过期,请重新登录!', '警告').then(action => {
       show = 0;
       store.clearUserInfoAction();
       store.clearDictAction();
@@ -38,10 +39,7 @@ const http = axios.create({
   timeout: 60000
 });
 const showError = msg => {
-  Toast({
-    type: 'error',
-    message: msg || '操作失败，请稍后再试'
-  });
+  Toast.error(msg || '操作失败，请稍后再试');
 };
 
 http.interceptors.request.use((config) => {
