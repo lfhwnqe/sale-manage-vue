@@ -53,7 +53,6 @@
           if (!result) return;
           const form = this.form;
           api.userLogin(form).then(res => {
-            console.log('res:', res);
             Toast.success('登陆成功');
             this.$router.push({ name: 'index' });
           }).catch(err => {
