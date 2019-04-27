@@ -37,6 +37,7 @@
         });
       },
       init() {
+        this.$store.getProductTypeList()
         this.getProductTypeList();
       }
     },

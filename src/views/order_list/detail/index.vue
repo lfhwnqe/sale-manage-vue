@@ -33,14 +33,14 @@
         <mu-list-item button :ripple="false">
           <mu-list-item-title>销售时间：</mu-list-item-title>
           <mu-list-item-sub-title>
-            {{ data.saleTime|date|empty }}
+            {{ data.saleTime|date('YYYY-MM-dd HH:mm:ss')|empty }}
           </mu-list-item-sub-title>
         </mu-list-item>
         <mu-divider></mu-divider>
         <mu-list-item button :ripple="false">
           <mu-list-item-title>创建时间：</mu-list-item-title>
           <mu-list-item-sub-title>
-            {{ data.createTime|date|empty }}
+            {{ data.createTime|date('YYYY-MM-dd HH:mm:ss')|empty }}
           </mu-list-item-sub-title>
         </mu-list-item>
         <mu-divider></mu-divider>
@@ -59,31 +59,6 @@
         </mu-list-item>
         <mu-divider></mu-divider>
       </mu-list>
-
-      <!--<mu-list textline="two-line">-->
-      <!--<template v-for="item in data.ordersList">-->
-      <!--<mu-list-item avatar :ripple="false">-->
-      <!--<mu-list-item-content>-->
-      <!--<mu-list-item-title>{{ item.productType |empty}}</mu-list-item-title>-->
-      <!--<mu-list-item-sub-title>{{ item.price |currency|empty}}-->
-      <!--</mu-list-item-sub-title>-->
-      <!--</mu-list-item-content>-->
-      <!--</mu-list-item>-->
-
-      <!--</template>-->
-      <!--<mu-list-item avatar :ripple="false" v-for="list in dataList">-->
-      <!--<mu-list-item-content>-->
-      <!--<mu-list-item-title>{{ list.label }}</mu-list-item-title>-->
-      <!--<mu-list-item-sub-title v-if="list.filter&&list.filter==='currency'">{{ data[list.name] |currency|empty}}-->
-      <!--</mu-list-item-sub-title>-->
-      <!--<mu-list-item-sub-title v-else-if="list.filter&&list.filter==='date'">{{ data[list.name]-->
-      <!--|date("YYYY-MM-dd HH:hh:mm:ss")|empty}}-->
-      <!--</mu-list-item-sub-title>-->
-      <!--<mu-list-item-sub-title v-else>{{ data[list.name] |empty}}</mu-list-item-sub-title>-->
-      <!--</mu-list-item-content>-->
-      <!--</mu-list-item>-->
-      <!--</mu-list>-->
-
     </div>
   </div>
 
