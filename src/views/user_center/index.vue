@@ -1,21 +1,18 @@
 <template>
-  <div id="app">
-    <ui-header></ui-header>
-    <div class="app-body">
-      <transition :name="transitionName">
-        <router-view class="main-view"></router-view>
-      </transition>
-    </div>
-    <ui-footer></ui-footer>
+  <div class="user-center ui-pa-1">
+    <transition :name="transitionName">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
 <script>
+  import './index.scss';
+
   export default {
-    name: 'app',
     data() {
       return {
-        transitionName: 'fold-left',
+        transitionName: 'fold-left'
       };
     },
     watch: {
@@ -128,4 +125,3 @@
     }
   }
 </style>
-

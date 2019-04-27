@@ -6,6 +6,7 @@ import router from './router/index';
 import components from './components/index';
 import filters from './filters/index';
 import MuseUI from 'muse-ui';
+import store from './store/index';
 
 import 'muse-ui/dist/muse-ui.css';
 import './assets/scss/index.scss';
@@ -19,7 +20,9 @@ filters.init(Vue);
 
 Vue.config.productionTip = false;
 
-new Vue({
+const app = new Vue({
   render: h => h(App),
   router
 }).$mount('#app');
+
+window.$app = app;

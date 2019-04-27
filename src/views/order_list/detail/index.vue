@@ -2,28 +2,26 @@
   <div class="order-detail ui-container ui-pa-1">
     <div class="order-detail">
       <mu-list toggle-nested>
-        <mu-list-item button :ripple="false" nested :open="open === 'send'"
-          @toggle-nested="open = arguments[0] ? 'send' : ''">
-          <!--<mu-list-item-action>-->
-          <!--<mu-icon value="send"></mu-icon>-->
-          <!--</mu-list-item-action>-->
-          <mu-list-item-title>内容</mu-list-item-title>
-          <mu-list-item-action>
-            <mu-icon class="toggle-icon" size="24" value="keyboard_arrow_down"></mu-icon>
-          </mu-list-item-action>
+        <template v-for="(item,index) in data.ordersList">
+          <mu-list-item button :ripple="false" nested :open="open == index"
+            @toggle-nested="open = arguments[0] ? index : ''">
+            <mu-list-item-title>单个商品</mu-list-item-title>
+            <mu-list-item-action>
+              <mu-icon class="toggle-icon" size="24" value="keyboard_arrow_down"></mu-icon>
+            </mu-list-item-action>
 
-          <mu-list-item button :ripple="false" slot="nested">
-            <mu-list-item-title>商品类型</mu-list-item-title>
-            <mu-list-item-sub-title>出售价格</mu-list-item-sub-title>
-            <mu-list-item-sub-title>数量</mu-list-item-sub-title>
+            <mu-list-item button :ripple="false" slot="nested">
+              <mu-list-item-title>商品类型：{{ item.productType|dict|empty }}</mu-list-item-title>
+            </mu-list-item>
+            <mu-list-item button :ripple="false" slot="nested">
+              <mu-list-item-title>出售价格：{{ item.price |currency|empty }}</mu-list-item-title>
+            </mu-list-item>
+            <mu-list-item button :ripple="false" slot="nested">
+              <mu-list-item-title>数量：{{ item.number |empty}}</mu-list-item-title>
+            </mu-list-item>
           </mu-list-item>
-          <mu-list-item v-for="item in data.ordersList" button :ripple="false" slot="nested">
-            <mu-list-item-title>{{ item.productType }}</mu-list-item-title>
-            <mu-list-item-sub-title>{{ item.price |currency|empty}}</mu-list-item-sub-title>
-            <mu-list-item-sub-title>{{ item.number |empty}}</mu-list-item-sub-title>
-          </mu-list-item>
-        </mu-list-item>
-        <mu-divider></mu-divider>
+          <mu-divider></mu-divider>
+        </template>
 
         <mu-list-item button :ripple="false">
           <mu-list-item-title>总价：</mu-list-item-title>
@@ -98,7 +96,7 @@
   export default {
     data() {
       return {
-        open: 'send',
+        open: '0',
         data: {},
         itemList: [
           {

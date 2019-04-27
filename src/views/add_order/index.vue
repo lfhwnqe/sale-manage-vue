@@ -6,8 +6,8 @@
           label-width="100">
           <mu-form-item prop="productType" help-text="选择产品类型" label="商品类型" :rules="productTypeRules">
             <mu-select v-model="item.productType" prop="productType">
-              <mu-option v-for="option,index in productTypeList" :key="option" :label="option"
-                :value="option"></mu-option>
+              <mu-option v-for="option,index in productTypeOptions" :key="index" :label="option.label"
+                :value="option.value"></mu-option>
             </mu-select>
           </mu-form-item>
           <mu-form-item prop="number" help-text="输入产品数量" label="数量（斤）" :rules="productNumberRules">
@@ -160,6 +160,14 @@
           ret = '';
         }
         return ret;
+      },
+      productTypeOptions() {
+        let ret;
+        ret = this.$store.productTypeList
+        if(!ret){
+          this.$store.getProductTypeList()
+        }
+        return ret
       }
     },
     created() {

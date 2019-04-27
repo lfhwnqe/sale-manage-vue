@@ -26,8 +26,7 @@ const showExpireBox = (() => {
     show = 1;
     Message.alert('登录过期,请重新登录!', '警告').then(action => {
       show = 0;
-      store.clearUserInfoAction();
-      store.clearDictAction();
+      store.clearProductTypeList();
       router.push({ name: 'login' });
     });
   };

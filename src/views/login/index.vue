@@ -1,13 +1,5 @@
 <template>
   <div class="login ui-pa-2">
-    <!--<div class="login-form">-->
-    <!--<mt-field label="用户名" placeholder="请输入用户名" v-model="form.username"></mt-field>-->
-    <!--<mt-field label="密码" placeholder="请输入密码" type="password" v-model="form.password"></mt-field>-->
-    <!--</div>-->
-    <!--<div class="login-btns ui-ta-center ui-mt-2">-->
-    <!--<mt-button @click.native="login" type="default">登陆</mt-button>-->
-    <!--</div>-->
-
     <mu-container>
       <mu-form ref="form" :model="form" class="mu-demo-form">
         <mu-form-item label="用户名" help-text="帮助文字" prop="username" :rules="usernameRules">
@@ -54,6 +46,7 @@
           const form = this.form;
           api.userLogin(form).then(res => {
             Toast.success('登陆成功');
+            this.$store.getProductTypeList();
             this.$router.push({ name: 'index' });
           }).catch(err => {
             console.log('err:', err);
@@ -65,9 +58,6 @@
           username: '',
           password: ''
         };
-      },
-      login() {
-
       },
 //      showUserList() {
 //        return api.showUserList().then(res => {

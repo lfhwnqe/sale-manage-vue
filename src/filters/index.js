@@ -1,11 +1,13 @@
 import date from './date';
 import empty from './empty';
 import currency from './currency';
+import dict from './dict'
 
 const filters = [
   date,
   empty,
   currency,
+  dict
 ];
 
 export default {
