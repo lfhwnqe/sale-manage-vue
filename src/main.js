@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import App from './App.vue';
-import Mint from 'mint-ui';
 import VueRouter from 'vue-router';
 import router from './router/index';
 import components from './components/index';
@@ -10,10 +9,8 @@ import store from './store/index';
 
 import 'muse-ui/dist/muse-ui.css';
 import './assets/scss/index.scss';
-import 'mint-ui/lib/style.css';
 
 Vue.use(VueRouter);
-Vue.use(Mint);
 Vue.use(MuseUI);
 components.init(Vue);
 filters.init(Vue);

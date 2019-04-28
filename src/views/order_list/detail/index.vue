@@ -31,6 +31,13 @@
         </mu-list-item>
         <mu-divider></mu-divider>
         <mu-list-item button :ripple="false">
+          <mu-list-item-title>会员电话：</mu-list-item-title>
+          <mu-list-item-sub-title>
+            {{ data.phone|empty }}
+          </mu-list-item-sub-title>
+        </mu-list-item>
+        <mu-divider></mu-divider>
+        <mu-list-item button :ripple="false">
           <mu-list-item-title>销售时间：</mu-list-item-title>
           <mu-list-item-sub-title>
             {{ data.saleTime|date('YYYY-MM-dd HH:mm:ss')|empty }}

@@ -18,8 +18,11 @@
           </mu-form-item>
         </mu-form>
       </template>
+      <mu-form-item prop="phone" help-text="输入客户电话" label="电话" :rules="phoneRules">
+        <mu-text-field prop="phone" v-model.trim="form.phone"></mu-text-field>
+      </mu-form-item>
       <mu-form-item prop="saleTime" help-text="选择销售时间" label="销售时间" :rules="saleTimeRules">
-        <mu-date-input v-model="form.saleTime" prop="saleTime" type="dateTime" actions></mu-date-input>
+        <mu-date-input v-model="form.saleTime" prop="saleTime" container="bottomSheet" type="dateTime" actions></mu-date-input>
       </mu-form-item>
       <mu-form-item prop="onlyOneType" help-text="订单是否只有一种商品" label="单类商品">
         <mu-select :disabled="form.ordersList.length>1" v-model="form.onlyOneType">
@@ -47,19 +50,11 @@
 <script>
   import * as api from '../../api/order';
   import Toast from 'muse-ui-toast';
-
+  // 手机号正则
+  const REG_MOBILE = /^1\d{10}$/
   export default {
     data() {
       return {
-//        form: {
-//          productName: '',
-//          amount: '',
-//          totalPrice: '',
-//          tagPrice: '',
-//          saleTime: new Date(),
-//          remark: ''
-//        }
-        productTypeList: ['花酒', '白酒', '红酒', '包装'],
         labelPosition: 'left',
         form: {
           ordersList: [{
@@ -69,6 +64,7 @@
           }],
           saleTime: Date.now(),
           remark: '',
+          phone:'',
           onlyOneType: true,
           // 单次添加订单的产品数量
           orderNumberInOrder: 1,
@@ -84,7 +80,12 @@
         productNumberRules: [{ validate: (val) => !!val, message: '必须输入产品数量' }],
         productPriceRules: [{ validate: (val) => !!val, message: '必须输入产品价格' }],
         saleTimeRules: [{ validate: (val) => !!val, message: '必须选择销售时间' }],
-
+        phoneRules:[{ validate: (val) => {
+          if(!REG_MOBILE.test(val)){
+            if(val) return false
+          }
+          return true
+        }, message: '必须输入正确手机号' }]
       };
     },
     methods: {
