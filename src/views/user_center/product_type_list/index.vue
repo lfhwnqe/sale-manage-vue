@@ -1,5 +1,5 @@
 <template>
-  <div class="product-type-list">
+  <div class="product-type-list ui-pa-1">
     <mu-list>
       <mu-list-item button :ripple="false" v-for="item in list">
         <mu-list-item-title>{{ item.label }}</mu-list-item-title>
@@ -37,7 +37,7 @@
         });
       },
       init() {
-        this.$store.getProductTypeList()
+        this.$store.getProductTypeList();
         this.getProductTypeList();
       }
     },

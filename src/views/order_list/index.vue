@@ -9,7 +9,6 @@
 
               <mu-list-item-action>
                 <mu-icon value="search" @click="openBotttomSheet"></mu-icon>
-              <!--<mu-button @click="openBotttomSheet"><mu-icon value="grade"></mu-icon></mu-button>-->
               </mu-list-item-action>
             </mu-list-item>
 
@@ -31,15 +30,23 @@
           <mu-button slot="left" icon @click="botttomSheet=false">
             <mu-icon value="close"></mu-icon>
           </mu-button>
-          <mu-button slot="right" flat  @click="search">
+          <mu-button slot="right" flat @click="search">
             搜索
           </mu-button>
         </mu-appbar>
         <div class="ui-pa-1">
-          <mu-form :ref="'ordersForm'" :model="form" class="mu-demo-form" label-position="left"
+          <mu-form ref="ordersForm" :model="form" class="mu-demo-form" label-position="left"
             label-width="100">
-            <mu-form-item prop="productType" help-text="输入电话号码" label="电话号码" :rules="phoneRules">
-              <mu-auto-complete :data="phoneLists" label="最多显示五条搜索数据" :max-search-results="5" v-model="form.phone"></mu-auto-complete>
+            <mu-form-item prop="phone" help-text="输入电话号码" label="电话号码" :rules="phoneRules">
+              <mu-auto-complete @input="searchPhoneNumber" :data="phoneLists" v-model="form.phoneNumber"
+                avatar>
+              </mu-auto-complete>
+            </mu-form-item>
+            <mu-form-item help-text="选择销售员" label="销售员" :rules="phoneRules">
+              <mu-select v-model="form.saleBy" full-width>
+                <mu-option v-for="option,index in saleByList" :key="index" :label="option.label"
+                  :value="option.value"></mu-option>
+              </mu-select>
             </mu-form-item>
           </mu-form>
         </div>
@@ -52,37 +59,52 @@
   import * as api from '../../api/order';
   import './index.scss';
   // 手机号正则
-  const REG_MOBILE = /^1\d{10}$/
+  const REG_MOBILE = /^1\d{10}$/;
 
   export default {
     data() {
       return {
-        citys:['1','2','3'],
-        botttomSheet:false,
+        citys: ['1', '2', '3'],
+        botttomSheet: false,
         refreshing: false,
         text: 'List',
-        phoneLists:[],
+        phoneLists: [],
+        saleByList: [],
 
         orderList: [],
         loading: false,
         form: {
           pageSize: 20,
           pageNum: 1,
-          phone:''
+          phoneNumber: ''
         },
         totalPage: 0,
-        phoneRules:[{ validate: (val) => {
-          if(!REG_MOBILE.test(val)){
-            if(val) return false
-          }
-          return true
-        }, message: '必须输入正确手机号' }]
+        phoneRules: [{
+          validate: (val) => {
+            if (!REG_MOBILE.test(val)) {
+              if (val) return false;
+            }
+            return true;
+          }, message: '必须输入正确手机号'
+        }]
       };
     },
     methods: {
-      search(){},
-      openBotttomSheet(){
-        this.botttomSheet = true
+      search() {},
+      openBotttomSheet() {
+        this.botttomSheet = true;
+        this.getSaleByList();
+      },
+      searchPhoneNumber() {
+        return api.getPhoneNumList({ phoneNumber: this.form.phoneNumber }).then(res => {
+          this.phoneLists = res;
+        });
+      },
+      getSaleByList() {
+        api.getSaleByList().then(res => {
+          console.log(res);
+          this.saleByList = res;
+        });
       },
       refresh() {
         this.refreshing = true;

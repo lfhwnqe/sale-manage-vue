@@ -43,49 +43,54 @@ const router = new Router({
         import( /* webpackChunkName: "order" */ '../views/add_order/index.vue'),
     },
     {
-      path: '/userCenter',
-      name: 'userCenter',
+      path: 'home',
+      name: 'userCenterHome',
       title: '用户中心',
       meta: { name: '用户中心' },
-      redirect:{name:'userCenterHome'},
       component: () =>
-        import( /* webpackChunkName: "order" */ '../views/user_center/index.vue'),
-      children: [
-        {
-          path: 'home',
-          name: 'userCenterHome',
-          title: '用户中心',
-          meta: { name: '用户中心' },
-          component: () =>
-            import( /* webpackChunkName: "order" */ '../views/user_center/home/index.vue'),
-        },
-        {
-          path: 'addProductType',
-          name: 'addProductType',
-          title: '添加产品',
-          meta: { name: '添加产品' },
-          component: () =>
-            import( /* webpackChunkName: "order" */ '../views/user_center/add_product_type/index.vue'),
-        },
-        {
-          path: 'productTypeList',
-          name: 'productTypeList',
-          title: '产品类型列表',
-          meta: { name: '产品类型列表' },
-          component: () =>
-            import( /* webpackChunkName: "order" */ '../views/user_center/product_type_list/index.vue'),
-        },
-        {
-          path: 'subordinate',
-          name: 'subordinate',
-          title: '下属管理',
-          meta: { name: '下属管理' },
-          component: () =>
-            import( /* webpackChunkName: "order" */ '../views/user_center/subordinate_manage/index.vue'),
-        },
-
-      ]
+        import( /* webpackChunkName: "order" */ '../views/user_center/home/index.vue'),
     },
+    {
+      path: '/addProductType',
+      name: 'addProductType',
+      title: '添加产品',
+      meta: { name: '添加产品' },
+      component: () =>
+        import( /* webpackChunkName: "order" */ '../views/user_center/add_product_type/index.vue'),
+    },
+    {
+      path: '/productTypeList',
+      name: 'productTypeList',
+      title: '产品类型列表',
+      meta: { name: '产品类型列表' },
+      component: () =>
+        import( /* webpackChunkName: "order" */ '../views/user_center/product_type_list/index.vue'),
+    },
+    {
+      path: '/subordinate',
+      name: 'subordinate',
+      title: '下属管理',
+      meta: { name: '下属管理' },
+      component: () =>
+        import( /* webpackChunkName: "order" */ '../views/user_center/subordinate_manage/index.vue'),
+    },
+    {
+      path: '/addSubordinate',
+      name: 'addSubordinate',
+      title: '添加下属',
+      meta: { name: '添加下属' },
+      component: () =>
+        import( /* webpackChunkName: "order" */ '../views/user_center/subordinate_manage/add_subordinate/index.vue'),
+    },
+    {
+      path: '/subordinateList',
+      name: 'subordinateList',
+      title: '下属列表',
+      meta: { name: '下属列表' },
+      component: () =>
+        import( /* webpackChunkName: "order" */ '../views/user_center/subordinate_manage/subordinate_list/index.vue'),
+    },
+
     {
       path: '/login',
       component: () =>
@@ -94,6 +99,8 @@ const router = new Router({
       meta: { name: '登陆' },
       title: '登陆',
     },
+
+
     {
       path: '*',
       redirect: {

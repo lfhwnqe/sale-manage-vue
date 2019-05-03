@@ -1,5 +1,5 @@
 <template>
-  <div class="add-product-type">
+  <div class="add-product-type ui-pa-1">
     <mu-form ref="form" :model="form" class="mu-demo-form" label-position="left" label-width="100">
       <mu-form-item prop="label" label="产品名称" help-text="输入中文名称" :rules="labelRules">
         <mu-text-field v-model="form.label"></mu-text-field>

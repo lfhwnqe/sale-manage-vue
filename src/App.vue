@@ -1,12 +1,22 @@
 <template>
   <div id="app">
-    <ui-header></ui-header>
+    <ui-header @openDrawer="drawerOpen=true"></ui-header>
     <div class="app-body">
       <transition :name="transitionName">
         <router-view class="main-view"></router-view>
       </transition>
     </div>
-    <ui-footer></ui-footer>
+    <mu-drawer :open.sync="drawerOpen" :docked="docked" :right="position === 'right'">
+      <mu-list>
+        <mu-list-item v-for="item in navList" @click="locationTo(item.name)" button>
+          <mu-list-item-title>{{ item.label }}</mu-list-item-title>
+        </mu-list-item>
+        <!--<mu-list-item @click="drawerOpen = false" button>-->
+        <!--<mu-list-item-title></mu-list-item-title>-->
+        <!--</mu-list-item>-->
+      </mu-list>
+    </mu-drawer>
+    <!--<ui-footer></ui-footer>-->
   </div>
 </template>
 
@@ -15,8 +25,35 @@
     name: 'app',
     data() {
       return {
+        docked: false,
+        drawerOpen: false,
+        position: 'left',
         transitionName: 'fold-left',
+        navList: [
+          {
+            label: '主页',
+            name: 'index'
+          },
+          {
+            label: '订单列表',
+            name: 'orderList'
+          },
+          {
+            label: '添加订单',
+            name: 'addOrder'
+          },
+          {
+            label: '用户中心',
+            name: 'userCenterHome'
+          },
+        ]
       };
+    },
+    methods: {
+      locationTo(routeName) {
+        this.$router.push({ name: routeName });
+        this.drawerOpen = false;
+      }
     },
     watch: {
       // watch $route 决定使用哪种过渡
