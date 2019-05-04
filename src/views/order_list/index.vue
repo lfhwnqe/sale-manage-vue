@@ -49,7 +49,7 @@
         <mu-button slot="left" icon @click="botttomSheet=false">
           <mu-icon value="close"></mu-icon>
         </mu-button>
-        <mu-button slot="right" flat @click="search">
+        <mu-button slot="right" flat @click="submit">
           搜索
         </mu-button>
       </mu-appbar>
@@ -76,7 +76,7 @@
               actions></mu-date-input>
           </mu-form-item>
           <mu-form-item>
-            <mu-button color="primary" @click="submit">查询</mu-button>
+            <mu-button color="primary" @click="submit">搜索</mu-button>
             <mu-button @click="clear">重置</mu-button>
           </mu-form-item>
         </mu-form>
