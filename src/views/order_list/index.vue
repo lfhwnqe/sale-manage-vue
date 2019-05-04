@@ -68,11 +68,11 @@
             </mu-select>
           </mu-form-item>
           <mu-form-item help-text="选择起始时间" label="起始时间">
-            <mu-date-input v-model="form.fromTime" prop="fromTime" container="bottomSheet" type="dateTime"
+            <mu-date-input v-model="form.fromTime" prop="fromTime" container="bottomSheet" type="date"
               actions></mu-date-input>
           </mu-form-item>
           <mu-form-item help-text="选择截止时间" label="截止时间">
-            <mu-date-input v-model="form.endTime" prop="endTime" container="bottomSheet" type="dateTime"
+            <mu-date-input v-model="form.endTime" prop="endTime" container="bottomSheet" type="date"
               actions></mu-date-input>
           </mu-form-item>
           <mu-form-item>

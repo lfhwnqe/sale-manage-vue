@@ -35,7 +35,7 @@ const router = new Router({
         import( /* webpackChunkName: "order" */ '../views/add_order/index.vue'),
     },
     {
-      path: 'home',
+      path: '/home',
       name: 'userCenterHome',
       title: '用户中心',
       meta: { name: '用户中心' },

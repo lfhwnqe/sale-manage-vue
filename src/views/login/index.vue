@@ -47,6 +47,7 @@
           api.userLogin(form).then(res => {
             Toast.success('登陆成功');
             this.$store.getProductTypeList();
+            this.$store.setUserInfo(res);
             this.$router.push({ name: 'index' });
           }).catch(err => {
             console.log('err:', err);

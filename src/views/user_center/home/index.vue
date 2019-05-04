@@ -13,12 +13,12 @@
         </mu-list-item-content>
       </mu-list-item>
       <mu-divider></mu-divider>
-      <mu-list-item @click="go('subordinate')" button>
+      <mu-list-item v-if="$store.userInfo.role==='superAdmin'" @click="go('subordinate')" button>
         <mu-list-item-content>
           <mu-list-item-title>下属设置</mu-list-item-title>
         </mu-list-item-content>
       </mu-list-item>
-      <mu-divider></mu-divider>
+      <mu-divider v-if="$store.userInfo.role==='superAdmin'"></mu-divider>
     </mu-list>
   </div>
 </template>
