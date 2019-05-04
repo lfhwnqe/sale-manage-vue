@@ -76,10 +76,12 @@
   import './index.scss';
 
   export default {
+    props: {
+      data: { type: Object, require: true }
+    },
     data() {
       return {
         open: '0',
-        data: {},
         itemList: [
           {
             name: 'productName',
@@ -110,19 +112,5 @@
         ]
       };
     },
-    created() {
-      const data = this.$route.params;
-      if (!data.ordersTotalPrice) {
-        this.$router.push({ name: 'orderList' });
-        return;
-      }
-      this.data = data;
-//      ['saleTime', 'createTime'].forEach(date => {
-//        const time = new Date(data[date]);
-//        const timeStr = time.toLocaleString();
-//        data[date] = timeStr;
-//      });
-
-    }
   };
 </script>

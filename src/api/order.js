@@ -18,3 +18,9 @@ export function getSaleByList(params) {
 }
 
 
+export function removeOrderById(params) {
+  return http.post('/api/removeOrderById', params);
+}
+
+
+

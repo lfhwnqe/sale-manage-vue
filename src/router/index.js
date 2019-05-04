@@ -27,14 +27,6 @@ const router = new Router({
         import( /* webpackChunkName: "order" */ '../views/order_list/index.vue'),
     },
     {
-      path: '/orderDetail',
-      name: 'orderDetail',
-      title: '订单详情',
-      meta: { name: '订单详情' },
-      component: () =>
-        import( /* webpackChunkName: "order" */ '../views/order_list/detail/index.vue'),
-    },
-    {
       path: '/addOrder',
       name: 'addOrder',
       title: '添加订单',

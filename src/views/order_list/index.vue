@@ -25,19 +25,24 @@
           </mu-list-item>
 
 
-          <mu-list-item @click="goDetail(index)" button :ripple="false">
-            <mu-list-item-content>
+          <mu-list-item button :ripple="false">
+            <mu-list-item-content @click="goDetail(index)">
               <mu-list-item-title>订单总价：{{ item.ordersTotalPrice|currency|empty }}</mu-list-item-title>
               <mu-list-item-sub-title>备注：{{ item.remark|empty }}</mu-list-item-sub-title>
             </mu-list-item-content>
             <mu-list-item-action>
-              <mu-icon value="more_horiz"></mu-icon>
+              <mu-icon value="more_horiz" @click="goDetail(index)" v-if="!canDeleteOrder"></mu-icon>
+              <mu-icon value="delete" @click="removeOrder(index)" v-else></mu-icon>
             </mu-list-item-action>
           </mu-list-item>
           <mu-divider></mu-divider>
         </template>
       </mu-list>
     </mu-load-more>
+
+    <mu-bottom-sheet :open.sync="showDetail">
+      <Detail :data="detailData"></Detail>
+    </mu-bottom-sheet>
 
     <mu-dialog width="360" transition="slide-bottom" fullscreen :open.sync="botttomSheet">
       <mu-appbar color="primary" title="搜索">
@@ -82,19 +87,25 @@
 
 <script>
   import * as api from '../../api/order';
+  import Message from 'muse-ui-message';
+  import Toast from 'muse-ui-toast';
   import './index.scss';
+  import Detail from './detail/index.vue';
   // 手机号正则
   const REG_MOBILE = /^1\d{10}$/;
 
   export default {
     data() {
       return {
+        showDetail: false,
         citys: ['1', '2', '3'],
         botttomSheet: false,
         refreshing: false,
         text: 'List',
         phoneLists: [],
         saleByList: [],
+        detailData: {},
+        canDeleteOrder: false,
 
         orderList: [],
         loading: false,
@@ -144,6 +155,7 @@
           this.totalPage = res.totalPage;
           this.total = res.total;
           this.totalPrice = res.totalPrice;
+          this.canDeleteOrder = res.canDeleteOrder;
         });
       },
       openBotttomSheet() {
@@ -177,9 +189,18 @@
       },
       goDetail(index) {
         const params = this.orderList[index];
-        this.$router.push({
-          name: 'orderDetail',
-          params
+        this.detailData = params;
+        this.showDetail = true;
+      },
+      removeOrder(index) {
+        const params = this.orderList[index];
+        const orderId = params._id;
+        Message.confirm('确定要删除本订单吗?', '提醒').then(result => {
+          if (!result.result) return;
+          return api.removeOrderById({ orderId }).then(_ => {
+            Toast.success('删除成功');
+            this.refresh();
+          });
         });
       }
     },
@@ -195,6 +216,9 @@
         });
         return ret;
       }
+    },
+    components: {
+      Detail
     },
     created() {
       this.refresh();
