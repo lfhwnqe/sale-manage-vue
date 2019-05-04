@@ -10,9 +10,9 @@
             </mu-list-item-sub-title>
             <mu-list-item-sub-title>总收入：{{ totalPrice|currency }}</mu-list-item-sub-title>
           </mu-list-item-content>
-          <!--<mu-list-item-action>-->
-          <!--<mu-icon value="search" @click="openBotttomSheet"></mu-icon>-->
-          <!--</mu-list-item-action>-->
+          <mu-list-item-action>
+            <mu-icon value="search" @click="openBotttomSheet"></mu-icon>
+          </mu-list-item-action>
         </mu-list-item>
         <mu-divider></mu-divider>
         <template v-for="(item,index) in orderList">
@@ -119,7 +119,6 @@
       };
     },
     methods: {
-      submit() {},
       clear() {
         this.form = {
           pageSize: 20,
@@ -128,8 +127,25 @@
           fromTime: '',
           endTime: ''
         };
+        this.submit();
       },
-      search() {},
+      submit() {
+        this.orderList = [];
+        this.form.pageNum = 1;
+        return this.search().then(_ => {
+          this.botttomSheet = false;
+        });
+      },
+      search() {
+        return api.getOrderList(this.form).then(res => {
+          this.orderList = [...this.orderList, ...res.orderList];
+          this.form.pageSize = res.pageSize;
+          this.form.pageNum = res.pageNum;
+          this.totalPage = res.totalPage;
+          this.total = res.total;
+          this.totalPrice = res.totalPrice;
+        });
+      },
       openBotttomSheet() {
         this.botttomSheet = true;
         this.getSaleByList();
@@ -146,18 +162,8 @@
       },
       refresh() {
         this.refreshing = true;
-        this.form = {
-          pageSize: 20,
-          pageNum: 1,
-        };
-        return api.getOrderList(this.form).then(res => {
-          this.orderList = [...this.orderList, ...res.orderList];
-          this.form.pageSize = res.pageSize;
-          this.form.pageNum = res.pageNum;
-          this.totalPage = res.totalPage;
-          this.total = res.total;
-          this.totalPrice = res.totalPrice;
-        }).finally(_ => {
+        this.form.pageNum = 1;
+        this.search().finally(_ => {
           this.refreshing = false;
         });
       },
@@ -165,14 +171,7 @@
         if (this.totalPage == this.form.pageNum) return;
         this.loading = true;
         this.form.pageNum = Number(this.form.pageNum) + 1;
-        return api.getOrderList(this.form).then(res => {
-          this.orderList = [...this.orderList, ...res.orderList];
-          this.form.pageSize = res.pageSize;
-          this.form.pageNum = res.pageNum;
-          this.totalPage = res.totalPage;
-          this.total = res.total;
-          this.totalPrice = res.totalPrice;
-        }).finally(_ => {
+        this.search().finally(_ => {
           this.loading = false;
         });
       },
