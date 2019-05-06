@@ -45,8 +45,8 @@ const router = new Router({
     {
       path: '/addProductType',
       name: 'addProductType',
-      title: '添加产品',
-      meta: { name: '添加产品' },
+      title: '添加品类',
+      meta: { name: '添加品类' },
       component: () =>
         import( /* webpackChunkName: "order" */ '../views/user_center/add_product_type/index.vue'),
     },
@@ -57,6 +57,14 @@ const router = new Router({
       meta: { name: '产品类型列表' },
       component: () =>
         import( /* webpackChunkName: "order" */ '../views/user_center/product_type_list/index.vue'),
+    },
+    {
+      path: '/addProduct',
+      name: 'addProduct',
+      title: '添加产品',
+      meta: { name: '添加产品' },
+      component: () =>
+        import( /* webpackChunkName: "order" */ '../views/user_center/product_type_list/add_product/index.vue'),
     },
     {
       path: '/subordinate',

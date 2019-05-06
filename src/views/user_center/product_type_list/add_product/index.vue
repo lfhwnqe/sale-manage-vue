@@ -1,17 +1,17 @@
 <template>
   <div class="add-product-type ui-pa-1">
     <mu-form ref="form" :model="form" class="mu-demo-form" label-position="left" label-width="100">
-      <mu-form-item prop="label" label="产品品类" help-text="输入中文名称" :rules="labelRules">
+      <mu-form-item prop="label" label="产品名称" help-text="输入中文名称" :rules="labelRules">
         <mu-text-field v-model="form.label"></mu-text-field>
       </mu-form-item>
-      <mu-form-item prop="value" label="产品品类值" help-text="输入英文简写" :rules="valueRules">
+      <mu-form-item prop="value" label="产品名称值" help-text="输入英文简写" :rules="valueRules">
         <mu-text-field v-model="form.value"></mu-text-field>
       </mu-form-item>
-      <mu-form-item prop="countLabel" label="品类单位" help-text="输入中文名称" :rules="countLabelRules">
-        <mu-text-field v-model="form.countLabel"></mu-text-field>
-      </mu-form-item>
-      <mu-form-item prop="countValue" label="品类单位值" help-text="输入英文简写" :rules="countValueRules">
-        <mu-text-field v-model="form.countValue"></mu-text-field>
+      <mu-form-item prop="productTypeId" help-text="选择产品所属品类" label="所属品类" :rules="productTypeIdRules">
+        <mu-select v-model="form.productTypeId" prop="productTypeId">
+          <mu-option v-for="option,index in productTypeOptions" :key="index" :label="option.label"
+            :value="option._id"></mu-option>
+        </mu-select>
       </mu-form-item>
 
       <mu-form-item>
@@ -22,7 +22,7 @@
   </div>
 </template>
 <script>
-  import * as api from '../../../api/product';
+  import * as api from '../../../../api/product';
   import Toast from 'muse-ui-toast';
 
   export default {
@@ -31,20 +31,19 @@
         form: {
           label: '',
           value: '',
-          countLabel: '',
-          countValue: ''
+          productTypeId: ''
         },
-        labelRules: [{ validate: (val) => !!val, message: '必须填写产品品类' },],
-        valueRules: [{ validate: (val) => !!val, message: '必须填写产品品类值' },],
-        countLabelRules: [{ validate: (val) => !!val, message: '必须填写品类单位' },],
-        countValueRules: [{ validate: (val) => !!val, message: '必须填写品类单位值' },]
+//        productTypeOptions: [],
+        labelRules: [{ validate: (val) => !!val, message: '必须填写产品名称' },],
+        valueRules: [{ validate: (val) => !!val, message: '必须填写产品名称值' },],
+        productTypeIdRules: [{ validate: (val) => !!val, message: '必须选择所属品类' },],
       };
     },
     methods: {
       submit() {
         this.$refs.form.validate().then((result) => {
           if (!result) return;
-          api.insertProductType(this.form).then(_ => {
+          api.insertProduct(this.form).then(_ => {
               Toast.success('添加成功');
               this.$store.getProductTypeList();
               this.$router.push({ name: 'productTypeList' });
@@ -58,6 +57,11 @@
           label: '',
           value: ''
         };
+      }
+    },
+    computed: {
+      productTypeOptions() {
+        return this.$store.productTypeList;
       }
     }
   };
