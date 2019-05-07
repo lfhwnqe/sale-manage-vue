@@ -1,8 +1,9 @@
 <template>
   <div class="product-type-list ui-pa-1">
     <div class="ui-mb-1">产品列表</div>
-    <div v-if="list.length===0">
-      该品类没有产品，请添加产品
+    <mu-divider></mu-divider>
+    <div v-if="list.length===0" class="ui-mt-1">
+      该品类没有产品，请<span class="ui-text-primary" @click="$router.push({name:'addProduct'})">添加产品</span>
     </div>
     <mu-list v-else>
       <mu-list-item button :ripple="false" v-for="item in list">

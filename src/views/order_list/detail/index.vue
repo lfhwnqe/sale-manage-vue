@@ -9,15 +9,18 @@
             <mu-list-item-action>
               <mu-icon class="toggle-icon" size="24" value="keyboard_arrow_down"></mu-icon>
             </mu-list-item-action>
-
             <mu-list-item button :ripple="false" slot="nested">
-              <mu-list-item-title>商品类型：{{ item.productType|dict|empty }}</mu-list-item-title>
+              <mu-list-item-title>商品名称：{{ item.product|dict('productList')|empty }}</mu-list-item-title>
+            </mu-list-item>
+            <mu-list-item button :ripple="false" slot="nested">
+              <mu-list-item-title>商品品类：{{ item.productType|dict|empty }}</mu-list-item-title>
             </mu-list-item>
             <mu-list-item button :ripple="false" slot="nested">
               <mu-list-item-title>出售价格：{{ item.price |currency|empty }}</mu-list-item-title>
             </mu-list-item>
             <mu-list-item button :ripple="false" slot="nested">
-              <mu-list-item-title>数量：{{ item.number |empty}}</mu-list-item-title>
+
+              <mu-list-item-title>数量（{{ productTypeOptions.find(type=>type.value===item.productType)['countLabel'] }}）：{{ item.number |empty}}</mu-list-item-title>
             </mu-list-item>
           </mu-list-item>
           <mu-divider></mu-divider>
@@ -112,5 +115,15 @@
         ]
       };
     },
+    computed:{
+      productTypeOptions() {
+        let ret;
+        ret = this.$store.productTypeList;
+        if (!ret) {
+          this.$store.getProductTypeList();
+        }
+        return ret;
+      }
+    }
   };
 </script>

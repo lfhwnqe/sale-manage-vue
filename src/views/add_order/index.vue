@@ -4,13 +4,23 @@
       <template v-for="(item,index) in form.ordersList">
         <mu-form :ref="'orderForm'+index" :model="item" class="mu-demo-form" :label-position="labelPosition"
           label-width="100">
-          <mu-form-item prop="productType" help-text="选择产品类型" label="商品类型" :rules="productTypeRules">
-            <mu-select v-model="item.productType" prop="productType">
+          <mu-form-item prop="productType" help-text="选择产品品类" label="产品品类" :rules="productTypeRules">
+            <mu-select v-model="item.productType" prop="productType" @change="changeProductType">
               <mu-option v-for="option,index in productTypeOptions" :key="index" :label="option.label"
                 :value="option.value"></mu-option>
             </mu-select>
           </mu-form-item>
-          <mu-form-item prop="number" help-text="输入产品数量" label="数量（斤）" :rules="productNumberRules">
+          <mu-form-item prop="product" help-text="选择产品" label="产品" :rules="productRules">
+            <mu-select v-model="item.product" prop="productType">
+              <mu-option v-for="option,index in productOption" :key="index" :label="option.label"
+                :value="option.value"></mu-option>
+            </mu-select>
+          </mu-form-item>
+          <mu-form-item v-if="item.productType" prop="number" help-text="输入产品数量" :label="'数量（'+productTypeOptions.find(type=>type.value===item.productType)['countLabel']+'）'"
+            :rules="productNumberRules">
+            <mu-text-field v-model.number="item.number"></mu-text-field>
+          </mu-form-item>
+          <mu-form-item v-else prop="number" help-text="输入产品数量" label="数量" :rules="productNumberRules">
             <mu-text-field v-model.number="item.number"></mu-text-field>
           </mu-form-item>
           <mu-form-item prop="price" help-text="输入收入金额" :rules="productPriceRules" label="价格（元）">
@@ -22,7 +32,8 @@
         <mu-text-field prop="phone" v-model.trim="form.phone"></mu-text-field>
       </mu-form-item>
       <mu-form-item prop="saleTime" help-text="选择销售时间" label="销售时间" :rules="saleTimeRules">
-        <mu-date-input v-model="form.saleTime" prop="saleTime" container="bottomSheet" type="dateTime" actions></mu-date-input>
+        <mu-date-input v-model="form.saleTime" prop="saleTime" container="bottomSheet" type="dateTime"
+          actions></mu-date-input>
       </mu-form-item>
       <mu-form-item prop="onlyOneType" help-text="订单是否只有一种商品" label="单类商品">
         <mu-select :disabled="form.ordersList.length>1" v-model="form.onlyOneType">
@@ -30,7 +41,7 @@
           <mu-option :key="false" label="否" :value="false"></mu-option>
         </mu-select>
       </mu-form-item>
-      <mu-form-item v-if="!form.onlyOneType" help-text="订单商品数量" prop="orderNumberInOrder" label="品类数量">
+      <mu-form-item v-if="!form.onlyOneType" help-text="订单商品数量" prop="orderNumberInOrder" label="商品数量">
         <mu-select @change="orderNumberInOrderChanged" v-model="form.orderNumberInOrder">
           <mu-option v-for="(option,index) in orderNumberInOrderList" :key="index" :label="option.label"
             :value="option.value"></mu-option>
@@ -49,9 +60,10 @@
 
 <script>
   import * as api from '../../api/order';
+  import * as productApi from '../../api/product';
   import Toast from 'muse-ui-toast';
   // 手机号正则
-  const REG_MOBILE = /^1\d{10}$/
+  const REG_MOBILE = /^1\d{10}$/;
   export default {
     data() {
       return {
@@ -59,16 +71,18 @@
         form: {
           ordersList: [{
             productType: '',
+            product: '',
             number: '',
             price: '',
           }],
           saleTime: Date.now(),
           remark: '',
-          phone:'',
+          phone: '',
           onlyOneType: true,
           // 单次添加订单的产品数量
           orderNumberInOrder: 1,
         },
+        productOption: [],
         orderNumberInOrderList: [
           { value: 1, label: '1' },
           { value: 2, label: '2' },
@@ -76,19 +90,27 @@
           { value: 4, label: '4' },
           { value: 5, label: '5' },
         ],
-        productTypeRules: [{ validate: (val) => !!val, message: '必须选择产品类型' },],
+        productRules: [{ validate: (val) => !!val, message: '必须选择产品' },],
+        productTypeRules: [{ validate: (val) => !!val, message: '必须选择产品品类' },],
         productNumberRules: [{ validate: (val) => !!val, message: '必须输入产品数量' }],
         productPriceRules: [{ validate: (val) => !!val, message: '必须输入产品价格' }],
         saleTimeRules: [{ validate: (val) => !!val, message: '必须选择销售时间' }],
-        phoneRules:[{ validate: (val) => {
-          if(!REG_MOBILE.test(val)){
-            if(val) return false
-          }
-          return true
-        }, message: '必须输入正确手机号' }]
+        phoneRules: [{
+          validate: (val) => {
+            if (!REG_MOBILE.test(val)) {
+              if (val) return false;
+            }
+            return true;
+          }, message: '必须输入正确手机号'
+        }]
       };
     },
     methods: {
+      changeProductType(value) {
+        return productApi.getProductList({ productTypeValue: value }).then(res => {
+          this.productOption = res;
+        });
+      },
       orderNumberInOrderChanged(number) {
         const tem = {
           productType: '',
@@ -164,11 +186,11 @@
       },
       productTypeOptions() {
         let ret;
-        ret = this.$store.productTypeList
-        if(!ret){
-          this.$store.getProductTypeList()
+        ret = this.$store.productTypeList;
+        if (!ret) {
+          this.$store.getProductTypeList();
         }
-        return ret
+        return ret;
       }
     },
     created() {

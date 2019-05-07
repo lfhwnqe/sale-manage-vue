@@ -1,8 +1,8 @@
 <template>
   <div class="product-type-list ui-pa-1">
     <mu-list>
-      <mu-list-item @click="showProductListFn(item)" button :ripple="false" v-for="item,index in list">
-        <mu-list-item-title>{{ item.label }}</mu-list-item-title>
+      <mu-list-item button :ripple="false" v-for="item,index in list">
+        <mu-list-item-title @click="showProductListFn(item)">{{ item.label }}</mu-list-item-title>
         <mu-list-item-action @click="remove(item)">
           <mu-icon value="remove_circle"></mu-icon>
         </mu-list-item-action>

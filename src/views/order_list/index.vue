@@ -28,6 +28,7 @@
           <mu-list-item button :ripple="false">
             <mu-list-item-content @click="goDetail(index)">
               <mu-list-item-title>订单总价：{{ item.ordersTotalPrice|currency|empty }}</mu-list-item-title>
+              <mu-list-item-sub-title>会员电话：{{ item.phone|empty }}</mu-list-item-sub-title>
               <mu-list-item-sub-title>备注：{{ item.remark|empty }}</mu-list-item-sub-title>
             </mu-list-item-content>
             <mu-list-item-action>
@@ -67,6 +68,18 @@
                 :value="option._id"></mu-option>
             </mu-select>
           </mu-form-item>
+          <!--<mu-form-item help-text="选择产品品类" label="产品品类" :rules="phoneRules">-->
+            <!--<mu-select v-model="form.saleBy" full-width>-->
+              <!--<mu-option v-for="option,index in productTypeOptions" :key="index" :label="option.label"-->
+                <!--:value="option.value"></mu-option>-->
+            <!--</mu-select>-->
+          <!--</mu-form-item>-->
+          <!--<mu-form-item help-text="选择产品" label="产品" :rules="phoneRules">-->
+            <!--<mu-select v-model="form.saleBy" full-width>-->
+              <!--<mu-option v-for="option,index in saleByList" :key="index" :label="option.userLabel"-->
+                <!--:value="option._id"></mu-option>-->
+            <!--</mu-select>-->
+          <!--</mu-form-item>-->
           <mu-form-item help-text="选择起始时间" label="起始时间">
             <mu-date-input v-model="form.fromTime" prop="fromTime" container="bottomSheet" type="date"
               actions></mu-date-input>
@@ -174,8 +187,7 @@
       },
       refresh() {
         this.refreshing = true;
-        this.form.pageNum = 1;
-        this.search().finally(_ => {
+        this.submit().finally(_ => {
           this.refreshing = false;
         });
       },
@@ -199,12 +211,20 @@
           if (!result.result) return;
           return api.removeOrderById({ orderId }).then(_ => {
             Toast.success('删除成功');
-            this.refresh();
+            this.submit();
           });
         });
       }
     },
     computed: {
+      productTypeOptions() {
+        let ret;
+        ret = this.$store.productTypeList;
+        if (!ret) {
+          this.$store.getProductTypeList();
+        }
+        return ret;
+      },
       dateIndex() {
         const ret = {};
         const orderList = this.orderList;

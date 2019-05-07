@@ -12,13 +12,22 @@ function createStore(options) {
   return new Vue({
     data: {
       productTypeList: [],
+      productList: [],
       userInfo: {}
     },
     methods: {
-      getProductTypeList() {
+      getProductTypeListDict() {
         return productApi.getProductTypeList().then(res => {
           this.productTypeList = res;
         });
+      },
+      getProductListDict() {
+        return productApi.getProductList().then(res => {
+          this.productList = res;
+        });
+      },
+      getProductTypeList() {
+        return Promise.all([this.getProductTypeListDict(), this.getProductListDict()]);
       },
       clearProductTypeList() {
         this.productTypeList = [];
