@@ -2,7 +2,7 @@
   <div class="order-detail ui-container ui-pa-1">
     <div class="order-detail">
       <mu-list toggle-nested>
-        <template v-for="(item,index) in data.ordersList">
+        <template v-for="(item,index) in ordersList">
           <mu-list-item button :ripple="false" nested :open="open == index"
             @toggle-nested="open = arguments[0] ? index : ''">
             <mu-list-item-title>单个商品</mu-list-item-title>
@@ -20,7 +20,9 @@
             </mu-list-item>
             <mu-list-item button :ripple="false" slot="nested">
 
-              <mu-list-item-title>数量（{{ productTypeOptions.find(type=>type.value===item.productType)['countLabel'] }}）：{{ item.number |empty}}</mu-list-item-title>
+              <mu-list-item-title>数量（{{ productTypeOptions.find(type=>type.value===item.productType)['countLabel']
+                }}）：{{ item.number |empty}}
+              </mu-list-item-title>
             </mu-list-item>
           </mu-list-item>
           <mu-divider></mu-divider>
@@ -75,7 +77,7 @@
 </template>
 
 <script>
-  //  import * as api from '../../api/order';
+  import * as api from '../../../api/order';
   import './index.scss';
 
   export default {
@@ -84,6 +86,7 @@
     },
     data() {
       return {
+        ordersList: [],
         open: '0',
         itemList: [
           {
@@ -115,7 +118,14 @@
         ]
       };
     },
-    computed:{
+    methods: {
+      init() {
+        api.getOrderDetail({ orderId: this.data._id }).then(res => {
+          this.ordersList = res;
+        });
+      }
+    },
+    computed: {
       productTypeOptions() {
         let ret;
         ret = this.$store.productTypeList;
@@ -124,6 +134,9 @@
         }
         return ret;
       }
+    },
+    created() {
+      this.init();
     }
   };
 </script>

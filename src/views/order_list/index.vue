@@ -62,14 +62,14 @@
               avatar>
             </mu-auto-complete>
           </mu-form-item>
-          <mu-form-item help-text="选择销售员" label="销售员" :rules="phoneRules">
+          <mu-form-item help-text="选择销售员" label="销售员" >
             <mu-select v-model="form.saleBy" full-width>
               <mu-option v-for="option,index in saleByList" :key="index" :label="option.userLabel"
                 :value="option._id"></mu-option>
             </mu-select>
           </mu-form-item>
-          <!--<mu-form-item help-text="选择产品品类" label="产品品类" :rules="phoneRules">-->
-            <!--<mu-select v-model="form.saleBy" full-width>-->
+          <!--<mu-form-item help-text="选择产品品类" label="产品品类" >-->
+            <!--<mu-select v-model="form.productType" full-width>-->
               <!--<mu-option v-for="option,index in productTypeOptions" :key="index" :label="option.label"-->
                 <!--:value="option.value"></mu-option>-->
             <!--</mu-select>-->
@@ -127,7 +127,8 @@
           pageNum: 1,
           phoneNumber: '',
           fromTime: '',
-          endTime: ''
+          endTime: '',
+//          productType: ''
         },
         totalPrice: 0,
         total: 0,
