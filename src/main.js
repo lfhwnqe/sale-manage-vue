@@ -5,7 +5,7 @@ import router from './router/index';
 import components from './components/index';
 import filters from './filters/index';
 import MuseUI from 'muse-ui';
-import store from './store/index';
+import './store/index';
 
 import 'muse-ui/dist/muse-ui.css';
 import './assets/scss/index.scss';

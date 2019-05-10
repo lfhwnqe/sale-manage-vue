@@ -35,6 +35,14 @@ const router = new Router({
         import( /* webpackChunkName: "order" */ '../views/add_order/index.vue'),
     },
     {
+      path: '/saleStatics',
+      name: 'saleStatics',
+      title: '销售统计',
+      meta: { name: '销售统计' },
+      component: () =>
+        import( /* webpackChunkName: "order" */ '../views/sale_statistics/index.vue'),
+    },
+    {
       path: '/home',
       name: 'userCenterHome',
       title: '用户中心',

@@ -43,6 +43,10 @@
             name: 'addOrder'
           },
           {
+            label: '销售统计',
+            name: 'saleStatics'
+          },
+          {
             label: '用户中心',
             name: 'userCenterHome'
           },
