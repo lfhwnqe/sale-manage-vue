@@ -4,6 +4,7 @@
       <template v-for="(item,index) in form.ordersList">
         <mu-form :ref="'orderForm'+index" :model="item" class="mu-demo-form" :label-position="labelPosition"
           label-width="100">
+          <!--todo 这里封装组件单独对一个商品负责-->
           <mu-form-item prop="productType" help-text="选择产品品类" label="产品品类" :rules="productTypeRules">
             <mu-select v-model="item.productType" prop="productType" @change="changeProductType">
               <mu-option v-for="option,index in productTypeOptions" :key="index" :label="option.label"
@@ -16,7 +17,8 @@
                 :value="option.value"></mu-option>
             </mu-select>
           </mu-form-item>
-          <mu-form-item v-if="item.productType" prop="number" help-text="输入产品数量" :label="'数量（'+productTypeOptions.find(type=>type.value===item.productType)['countLabel']+'）'"
+          <mu-form-item v-if="item.productType" prop="number" help-text="输入产品数量"
+            :label="'数量（'+productTypeOptions.find(type=>type.value===item.productType)['countLabel']+'）'"
             :rules="productNumberRules">
             <mu-text-field v-model.number="item.number"></mu-text-field>
           </mu-form-item>

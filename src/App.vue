@@ -29,7 +29,14 @@
         drawerOpen: false,
         position: 'left',
         transitionName: 'fold-left',
-        navList: [
+      };
+    },
+    computed: {
+      role() {
+        return (this.$store.userInfo && this.$store.userInfo.role) || 'baseUser';
+      },
+      navList() {
+        let ret = [
           {
             label: '主页',
             name: 'index'
@@ -46,12 +53,15 @@
             label: '销售统计',
             name: 'saleStatics'
           },
-          {
+        ];
+        if (this.role === 'superAdmin') {
+          ret.push({
             label: '用户中心',
             name: 'userCenterHome'
-          },
-        ]
-      };
+          });
+        }
+        return ret;
+      }
     },
     methods: {
       locationTo(routeName) {

@@ -3,7 +3,7 @@
     <mu-list>
       <mu-list-item>
         <mu-list-item-content>
-          <mu-list-item-title>收入：{{ statics.totalPrice|currency|empty }}</mu-list-item-title>
+          <mu-list-item-title>收入：{{ statics.totalPrice | currency | empty }}</mu-list-item-title>
         </mu-list-item-content>
       </mu-list-item>
       <mu-list-item>
@@ -89,7 +89,6 @@
       },
       getStatics() {
         return littleOrderApi.getStatics(this.form).then(res => {
-          console.log(res);
           this.statics = res;
         });
       },
