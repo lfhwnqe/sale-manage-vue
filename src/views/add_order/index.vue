@@ -138,6 +138,7 @@
       addOrder() {
         return api.insertOrder(this.form).then(res => {
           Toast.success('添加成功');
+          this.$router.push({ name: 'orderList' });
         }).catch(err => {
           console.log('err:', err);
         });
