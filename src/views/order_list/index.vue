@@ -42,7 +42,14 @@
     </mu-load-more>
 
     <mu-bottom-sheet :open.sync="showDetail">
-      <Detail :data="detailData"></Detail>
+      <!--<mu-dialog  transition="slide-bottom" fullscreen :open.sync="showDetail">-->
+        <!--<mu-appbar color="primary" title="详情">-->
+          <!--<mu-button slot="left" icon @click="showDetail=false">-->
+            <!--<mu-icon value="close"></mu-icon>-->
+          <!--</mu-button>-->
+        <!--</mu-appbar>-->
+        <Detail class="detail-component" :data="detailData"></Detail>
+      <!--</mu-dialog>-->
     </mu-bottom-sheet>
 
     <mu-dialog width="360" transition="slide-bottom" fullscreen :open.sync="botttomSheet">
@@ -62,23 +69,23 @@
               avatar>
             </mu-auto-complete>
           </mu-form-item>
-          <mu-form-item help-text="选择销售员" label="销售员" >
+          <mu-form-item help-text="选择销售员" label="销售员">
             <mu-select v-model="form.saleBy" full-width>
               <mu-option v-for="option,index in saleByList" :key="index" :label="option.userLabel"
                 :value="option._id"></mu-option>
             </mu-select>
           </mu-form-item>
           <!--<mu-form-item help-text="选择产品品类" label="产品品类" >-->
-            <!--<mu-select v-model="form.productType" full-width>-->
-              <!--<mu-option v-for="option,index in productTypeOptions" :key="index" :label="option.label"-->
-                <!--:value="option.value"></mu-option>-->
-            <!--</mu-select>-->
+          <!--<mu-select v-model="form.productType" full-width>-->
+          <!--<mu-option v-for="option,index in productTypeOptions" :key="index" :label="option.label"-->
+          <!--:value="option.value"></mu-option>-->
+          <!--</mu-select>-->
           <!--</mu-form-item>-->
           <!--<mu-form-item help-text="选择产品" label="产品" :rules="phoneRules">-->
-            <!--<mu-select v-model="form.saleBy" full-width>-->
-              <!--<mu-option v-for="option,index in saleByList" :key="index" :label="option.userLabel"-->
-                <!--:value="option._id"></mu-option>-->
-            <!--</mu-select>-->
+          <!--<mu-select v-model="form.saleBy" full-width>-->
+          <!--<mu-option v-for="option,index in saleByList" :key="index" :label="option.userLabel"-->
+          <!--:value="option._id"></mu-option>-->
+          <!--</mu-select>-->
           <!--</mu-form-item>-->
           <mu-form-item help-text="选择起始时间" label="起始时间">
             <mu-date-input v-model="form.fromTime" prop="fromTime" container="bottomSheet" type="date"
