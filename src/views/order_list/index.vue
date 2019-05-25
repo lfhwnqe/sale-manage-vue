@@ -8,7 +8,7 @@
             <mu-list-item-sub-title>
               订单数：{{ total }}
             </mu-list-item-sub-title>
-            <mu-list-item-sub-title>总收入：{{ totalPrice|currency }}</mu-list-item-sub-title>
+            <mu-list-item-sub-title>总收入：{{ totalPrice | currency }}</mu-list-item-sub-title>
           </mu-list-item-content>
           <mu-list-item-action>
             <mu-icon value="search" @click="openBotttomSheet"></mu-icon>
@@ -17,7 +17,7 @@
         <mu-divider></mu-divider>
         <template v-for="(item,index) in orderList">
           <mu-list-item :ripple="false" v-if="index===dateIndex[new Date(item.saleTime).toLocaleDateString()]">
-            <mu-list-item-title>{{ item.saleTime|date|empty }}</mu-list-item-title>
+            <mu-list-item-title>{{ item.saleTime | date | empty }}</mu-list-item-title>
 
             <mu-list-item-action>
               <mu-icon value="search" @click="openBotttomSheet"></mu-icon>
@@ -27,9 +27,9 @@
 
           <mu-list-item button :ripple="false">
             <mu-list-item-content @click="goDetail(index)">
-              <mu-list-item-title>订单总价：{{ item.ordersTotalPrice|currency|empty }}</mu-list-item-title>
-              <mu-list-item-sub-title>会员电话：{{ item.phone|empty }}</mu-list-item-sub-title>
-              <mu-list-item-sub-title>备注：{{ item.remark|empty }}</mu-list-item-sub-title>
+              <mu-list-item-title>订单总价：{{ item.ordersTotalPrice | currency | empty }}</mu-list-item-title>
+              <mu-list-item-sub-title>会员电话：{{ item.phone | empty }}</mu-list-item-sub-title>
+              <mu-list-item-sub-title>备注：{{ item.remark | empty }}</mu-list-item-sub-title>
             </mu-list-item-content>
             <mu-list-item-action>
               <mu-icon value="more_horiz" @click="goDetail(index)" v-if="!canDeleteOrder"></mu-icon>
@@ -41,16 +41,16 @@
       </mu-list>
     </mu-load-more>
 
-    <mu-bottom-sheet :open.sync="showDetail">
-      <!--<mu-dialog  transition="slide-bottom" fullscreen :open.sync="showDetail">-->
-        <!--<mu-appbar color="primary" title="详情">-->
-          <!--<mu-button slot="left" icon @click="showDetail=false">-->
-            <!--<mu-icon value="close"></mu-icon>-->
-          <!--</mu-button>-->
-        <!--</mu-appbar>-->
-        <Detail class="detail-component" :data="detailData"></Detail>
-      <!--</mu-dialog>-->
-    </mu-bottom-sheet>
+    <!--<mu-bottom-sheet :open.sync="showDetail">-->
+    <mu-dialog width="360" transition="slide-bottom" fullscreen :open.sync="showDetail">
+      <mu-appbar color="primary" title="订单详情">
+        <mu-button slot="left" icon @click="showDetail=false">
+          <mu-icon value="close"></mu-icon>
+        </mu-button>
+      </mu-appbar>
+      <Detail class="detail-component" :data="detailData"></Detail>
+    </mu-dialog>
+    <!--</mu-bottom-sheet>-->
 
     <mu-dialog width="360" transition="slide-bottom" fullscreen :open.sync="botttomSheet">
       <mu-appbar color="primary" title="搜索">
@@ -75,18 +75,6 @@
                 :value="option._id"></mu-option>
             </mu-select>
           </mu-form-item>
-          <!--<mu-form-item help-text="选择产品品类" label="产品品类" >-->
-          <!--<mu-select v-model="form.productType" full-width>-->
-          <!--<mu-option v-for="option,index in productTypeOptions" :key="index" :label="option.label"-->
-          <!--:value="option.value"></mu-option>-->
-          <!--</mu-select>-->
-          <!--</mu-form-item>-->
-          <!--<mu-form-item help-text="选择产品" label="产品" :rules="phoneRules">-->
-          <!--<mu-select v-model="form.saleBy" full-width>-->
-          <!--<mu-option v-for="option,index in saleByList" :key="index" :label="option.userLabel"-->
-          <!--:value="option._id"></mu-option>-->
-          <!--</mu-select>-->
-          <!--</mu-form-item>-->
           <mu-form-item help-text="选择起始时间" label="起始时间">
             <mu-date-input v-model="form.fromTime" prop="fromTime" container="bottomSheet" type="date"
               actions></mu-date-input>
