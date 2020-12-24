@@ -1,5 +1,7 @@
 # vue-sale-manage-system
 冲突测试
+
+测试git
 ## Project setup
 ```
 npm install
