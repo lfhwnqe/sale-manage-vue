@@ -6,13 +6,9 @@
 ```
 npm install
 ```
-<<<<<<< HEAD
 冲突2
 冲突1111
 hhh1
-=======
-冲突1111
->>>>>>> fdd2b2f2f4a36564015bd1eb90c3defd15b8d271
 ### Compiles and hot-reloads for development
 ```
 npm run serve
